@@ -1,8 +1,10 @@
 module Scheeema
-  class TablesController < ActionController::Base
+  class TablesController < ApplicationController
+
     def index
-      @tables = ActiveRecord::Base.connection.tables
+      @tables = Table.all
       render :index
     end
+    
   end
 end
