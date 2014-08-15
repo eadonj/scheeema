@@ -7,14 +7,14 @@ require "scheeema/version"
 Gem::Specification.new do |s|
   s.name        = "scheeema"
   s.version     = Scheeema::VERSION
-  s.authors     = ["TODO: Your name"]
-  s.email       = ["TODO: Your email"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of Scheeema."
-  s.description = "TODO: Description of Scheeema."
+  s.authors     = ["Eadon Jacobs and John Gesimondo"]
+  s.email       = ["scheeema@jmondo.com"]
+  s.homepage    = "http://github.com/scheeema"
+  s.summary     = "Visualize your schema"
+  s.description = "Mount the engine, start your rails server, and visit /scheeema to see your table structure. Stop opening schema.rb."
 
-  s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
-  s.test_files = Dir["test/**/*"]
+  s.files = Dir["{app,config,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
+  # s.test_files = Dir["test/**/*"]
 
   s.add_dependency "rails", "~> 4.0.0"
 
