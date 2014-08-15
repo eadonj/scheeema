@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140815205035) do
+ActiveRecord::Schema.define(version: 20140815201415) do
 
   create_table "mentions", force: true do |t|
     t.string   "source_title"
@@ -42,6 +42,14 @@ ActiveRecord::Schema.define(version: 20140815205035) do
   add_index "paradigms", ["era_id"], name: "index_paradigms_on_era_id"
   add_index "paradigms", ["exemplar_id"], name: "index_paradigms_on_exemplar_id"
 
+  create_table "paradigms_philosophers", id: false, force: true do |t|
+    t.integer "paradigm_id"
+    t.integer "philosopher_id"
+  end
+
+  add_index "paradigms_philosophers", ["paradigm_id"], name: "index_paradigms_philosophers_on_paradigm_id"
+  add_index "paradigms_philosophers", ["philosopher_id"], name: "index_paradigms_philosophers_on_philosopher_id"
+
   create_table "philosophers", force: true do |t|
     t.string   "first_name"
     t.string   "last_name"
@@ -51,13 +59,5 @@ ActiveRecord::Schema.define(version: 20140815205035) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  create_table "philosophers_paradigms", id: false, force: true do |t|
-    t.integer "paradigm_id"
-    t.integer "philosopher_id"
-  end
-
-  add_index "philosophers_paradigms", ["paradigm_id"], name: "index_philosophers_paradigms_on_paradigm_id"
-  add_index "philosophers_paradigms", ["philosopher_id"], name: "index_philosophers_paradigms_on_philosopher_id"
 
 end

@@ -1,0 +1,204 @@
+  [1m[36m (1.5ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) [0m
+  [1m[35m (0.6ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateParadigms (20140815200357)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.3ms)[0m  [1mCREATE TABLE "paradigms" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "pattern" varchar(255), "exemplar_id" integer, "archetype" varchar(255), "prototype" varchar(255), "example" varchar(255), "common" boolean, "discovered_at" datetime, "quantity" integer, "nullified_at" datetime, "era_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (0.1ms)[0m  CREATE INDEX "index_paradigms_on_exemplar_id" ON "paradigms" ("exemplar_id")
+  [1m[36m (0.1ms)[0m  [1mCREATE INDEX "index_paradigms_on_era_id" ON "paradigms" ("era_id")[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20140815200357"]]
+  [1m[36m (0.9ms)[0m  [1mcommit transaction[0m
+Migrating to CreatePhilosophers (20140815200815)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.4ms)[0m  [1mCREATE TABLE "philosophers" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "first_name" varchar(255), "last_name" varchar(255), "born_on" datetime, "country" varchar(255), "field_of_study" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20140815200815"]]
+  [1m[36m (0.5ms)[0m  [1mcommit transaction[0m
+Migrating to CreateMentions (20140815201027)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.3ms)[0m  [1mCREATE TABLE "mentions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "source_title" varchar(255), "author" varchar(255), "published_at" varchar(255), "paradigm_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (0.1ms)[0m  CREATE INDEX "index_mentions_on_paradigm_id" ON "mentions" ("paradigm_id")
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20140815201027"]]
+  [1m[35m (0.5ms)[0m  commit transaction
+Migrating to CreateParadigmsPhilosophers (20140815201415)
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  CREATE TABLE "paradigms_philosophers" ("paradigm_id" integer, "philosopher_id" integer) 
+  [1m[36m (0.1ms)[0m  [1mCREATE INDEX "index_paradigms_philosophers_on_paradigm_id" ON "paradigms_philosophers" ("paradigm_id")[0m
+  [1m[35m (0.1ms)[0m  CREATE INDEX "index_paradigms_philosophers_on_philosopher_id" ON "paradigms_philosophers" ("philosopher_id")
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20140815201415"]]
+  [1m[35m (0.8ms)[0m  commit transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.7ms)[0m  CREATE TABLE "mentions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "source_title" varchar(255), "author" varchar(255), "published_at" varchar(255), "paradigm_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36m (0.8ms)[0m  [1mCREATE INDEX "index_mentions_on_paradigm_id" ON "mentions" ("paradigm_id")[0m
+  [1m[35m (1.2ms)[0m  CREATE TABLE "paradigms" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "pattern" varchar(255), "exemplar_id" integer, "archetype" varchar(255), "prototype" varchar(255), "example" varchar(255), "common" boolean, "discovered_at" datetime, "quantity" integer, "nullified_at" datetime, "era_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36m (0.7ms)[0m  [1mCREATE INDEX "index_paradigms_on_era_id" ON "paradigms" ("era_id")[0m
+  [1m[35m (0.7ms)[0m  CREATE INDEX "index_paradigms_on_exemplar_id" ON "paradigms" ("exemplar_id")
+  [1m[36m (1.2ms)[0m  [1mCREATE TABLE "paradigms_philosophers" ("paradigm_id" integer, "philosopher_id" integer) [0m
+  [1m[35m (0.7ms)[0m  CREATE INDEX "index_paradigms_philosophers_on_paradigm_id" ON "paradigms_philosophers" ("paradigm_id")
+  [1m[36m (0.8ms)[0m  [1mCREATE INDEX "index_paradigms_philosophers_on_philosopher_id" ON "paradigms_philosophers" ("philosopher_id")[0m
+  [1m[35m (0.6ms)[0m  CREATE TABLE "philosophers" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "first_name" varchar(255), "last_name" varchar(255), "born_on" datetime, "country" varchar(255), "field_of_study" varchar(255), "created_at" datetime, "updated_at" datetime) 
+  [1m[36m (0.6ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) [0m
+  [1m[35m (0.6ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36m (0.1ms)[0m  [1mSELECT version FROM "schema_migrations"[0m
+  [1m[35m (0.5ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140815201415')
+  [1m[36m (0.6ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140815200357')[0m
+  [1m[35m (0.8ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140815200815')
+  [1m[36m (0.6ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140815201027')[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.1ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.1ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.1ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.1ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.1ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (1.9ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) [0m
+  [1m[35m (0.9ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to ChangeJoinTableName (20140815205035)
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.2ms)[0m  [1mALTER TABLE "paradigms_philosophers" RENAME TO "philosophers_paradigms"[0m
+SQLite3::SQLException: no such table: paradigms_philosophers: ALTER TABLE "paradigms_philosophers" RENAME TO "philosophers_paradigms"
+  [1m[35m (0.0ms)[0m  rollback transaction
+  [1m[36m (1.6ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) [0m
+  [1m[35m (0.8ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to ChangeJoinTableName (20140815205035)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.2ms)[0m  [1mALTER TABLE "paradigms_philosophers" RENAME TO "philosophers_paradigms"[0m
+SQLite3::SQLException: no such table: paradigms_philosophers: ALTER TABLE "paradigms_philosophers" RENAME TO "philosophers_paradigms"
+  [1m[35m (0.0ms)[0m  rollback transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to ChangeJoinTableName (20140815205035)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.2ms)[0m  [1mALTER TABLE "paradigms_philosophers" RENAME TO "philosophers_paradigms"[0m
+SQLite3::SQLException: no such table: paradigms_philosophers: ALTER TABLE "paradigms_philosophers" RENAME TO "philosophers_paradigms"
+  [1m[35m (0.0ms)[0m  rollback transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateParadigms (20140815200357)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.4ms)[0m  [1mCREATE TABLE "paradigms" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "pattern" varchar(255), "exemplar_id" integer, "archetype" varchar(255), "prototype" varchar(255), "example" varchar(255), "common" boolean, "discovered_at" datetime, "quantity" integer, "nullified_at" datetime, "era_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (0.1ms)[0m  CREATE INDEX "index_paradigms_on_exemplar_id" ON "paradigms" ("exemplar_id")
+  [1m[36m (0.1ms)[0m  [1mCREATE INDEX "index_paradigms_on_era_id" ON "paradigms" ("era_id")[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20140815200357"]]
+  [1m[36m (1.3ms)[0m  [1mcommit transaction[0m
+Migrating to CreatePhilosophers (20140815200815)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.3ms)[0m  [1mCREATE TABLE "philosophers" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "first_name" varchar(255), "last_name" varchar(255), "born_on" datetime, "country" varchar(255), "field_of_study" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20140815200815"]]
+  [1m[36m (0.6ms)[0m  [1mcommit transaction[0m
+Migrating to CreateMentions (20140815201027)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.2ms)[0m  [1mCREATE TABLE "mentions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "source_title" varchar(255), "author" varchar(255), "published_at" varchar(255), "paradigm_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (0.2ms)[0m  CREATE INDEX "index_mentions_on_paradigm_id" ON "mentions" ("paradigm_id")
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20140815201027"]]
+  [1m[35m (0.9ms)[0m  commit transaction
+Migrating to CreateParadigmsPhilosophers (20140815201415)
+  [1m[36m (0.3ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  CREATE TABLE "paradigms_philosophers" ("paradigm_id" integer, "philosopher_id" integer) 
+  [1m[36m (0.1ms)[0m  [1mCREATE INDEX "index_paradigms_philosophers_on_paradigm_id" ON "paradigms_philosophers" ("paradigm_id")[0m
+  [1m[35m (0.1ms)[0m  CREATE INDEX "index_paradigms_philosophers_on_philosopher_id" ON "paradigms_philosophers" ("philosopher_id")
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20140815201415"]]
+  [1m[35m (0.8ms)[0m  commit transaction
+Migrating to ChangeJoinTableName (20140815205035)
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "paradigms_philosophers" RENAME TO "philosophers_paradigms"
+  [1m[36m (1.1ms)[0m  [1mDROP INDEX "index_paradigms_philosophers_on_philosopher_id"[0m
+  [1m[35m (0.9ms)[0m  CREATE INDEX "index_philosophers_paradigms_on_philosopher_id" ON "philosophers_paradigms" ("philosopher_id")
+  [1m[36m (0.3ms)[0m  [1mDROP INDEX "index_paradigms_philosophers_on_paradigm_id"[0m
+  [1m[35m (1.6ms)[0m  CREATE INDEX "index_philosophers_paradigms_on_paradigm_id" ON "philosophers_paradigms" ("paradigm_id")
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20140815205035"]]
+  [1m[35m (1.3ms)[0m  commit transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36m (1.5ms)[0m  [1mCREATE TABLE "mentions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "source_title" varchar(255), "author" varchar(255), "published_at" varchar(255), "paradigm_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (1.4ms)[0m  CREATE INDEX "index_mentions_on_paradigm_id" ON "mentions" ("paradigm_id")
+  [1m[36m (0.8ms)[0m  [1mCREATE TABLE "paradigms" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "pattern" varchar(255), "exemplar_id" integer, "archetype" varchar(255), "prototype" varchar(255), "example" varchar(255), "common" boolean, "discovered_at" datetime, "quantity" integer, "nullified_at" datetime, "era_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (0.7ms)[0m  CREATE INDEX "index_paradigms_on_era_id" ON "paradigms" ("era_id")
+  [1m[36m (0.8ms)[0m  [1mCREATE INDEX "index_paradigms_on_exemplar_id" ON "paradigms" ("exemplar_id")[0m
+  [1m[35m (1.0ms)[0m  CREATE TABLE "philosophers" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "first_name" varchar(255), "last_name" varchar(255), "born_on" datetime, "country" varchar(255), "field_of_study" varchar(255), "created_at" datetime, "updated_at" datetime) 
+  [1m[36m (1.1ms)[0m  [1mCREATE TABLE "philosophers_paradigms" ("paradigm_id" integer, "philosopher_id" integer) [0m
+  [1m[35m (0.8ms)[0m  CREATE INDEX "index_philosophers_paradigms_on_paradigm_id" ON "philosophers_paradigms" ("paradigm_id")
+  [1m[36m (0.8ms)[0m  [1mCREATE INDEX "index_philosophers_paradigms_on_philosopher_id" ON "philosophers_paradigms" ("philosopher_id")[0m
+  [1m[35m (0.8ms)[0m  CREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) 
+  [1m[36m (0.8ms)[0m  [1mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [1m[35m (0.1ms)[0m  SELECT version FROM "schema_migrations"
+  [1m[36m (0.6ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140815205035')[0m
+  [1m[35m (0.7ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140815200357')
+  [1m[36m (0.8ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140815200815')[0m
+  [1m[35m (1.6ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140815201027')
+  [1m[36m (3.5ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140815201415')[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.1ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+Migrating to ChangeJoinTableName (20140815205035)
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  ALTER TABLE "philosophers_paradigms" RENAME TO "paradigms_philosophers"
+  [1m[36m (0.8ms)[0m  [1mDROP INDEX "index_philosophers_paradigms_on_paradigm_id"[0m
+  [1m[35m (0.1ms)[0m  CREATE INDEX "index_paradigms_philosophers_on_paradigm_id" ON "paradigms_philosophers" ("paradigm_id")
+  [1m[36m (0.1ms)[0m  [1mDROP INDEX "index_philosophers_paradigms_on_philosopher_id"[0m
+  [1m[35m (0.1ms)[0m  CREATE INDEX "index_paradigms_philosophers_on_philosopher_id" ON "paradigms_philosophers" ("philosopher_id")
+  [1m[36mSQL (0.2ms)[0m  [1mDELETE FROM "schema_migrations" WHERE "schema_migrations"."version" = '20140815205035'[0m
+  [1m[35m (0.7ms)[0m  commit transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to ChangeJoinTableName (20140815205035)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.4ms)[0m  [1mALTER TABLE "paradigms_philosophers" RENAME TO "philosophers_paradigms"[0m
+  [1m[35m (0.7ms)[0m  DROP INDEX "index_paradigms_philosophers_on_philosopher_id"
+  [1m[36m (0.1ms)[0m  [1mCREATE INDEX "index_philosophers_paradigms_on_philosopher_id" ON "philosophers_paradigms" ("philosopher_id")[0m
+  [1m[35m (0.1ms)[0m  DROP INDEX "index_paradigms_philosophers_on_paradigm_id"
+  [1m[36m (0.1ms)[0m  [1mCREATE INDEX "index_philosophers_paradigms_on_paradigm_id" ON "philosophers_paradigms" ("paradigm_id")[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20140815205035"]]
+  [1m[36m (0.7ms)[0m  [1mcommit transaction[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.1ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.1ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+Migrating to ChangeJoinTableName (20140815205035)
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  ALTER TABLE "philosophers_paradigms" RENAME TO "paradigms_philosophers"
+  [1m[36m (0.8ms)[0m  [1mDROP INDEX "index_philosophers_paradigms_on_paradigm_id"[0m
+  [1m[35m (0.1ms)[0m  CREATE INDEX "index_paradigms_philosophers_on_paradigm_id" ON "paradigms_philosophers" ("paradigm_id")
+  [1m[36m (0.1ms)[0m  [1mDROP INDEX "index_philosophers_paradigms_on_philosopher_id"[0m
+  [1m[35m (0.1ms)[0m  CREATE INDEX "index_paradigms_philosophers_on_philosopher_id" ON "paradigms_philosophers" ("philosopher_id")
+  [1m[36mSQL (0.2ms)[0m  [1mDELETE FROM "schema_migrations" WHERE "schema_migrations"."version" = '20140815205035'[0m
+  [1m[35m (0.6ms)[0m  commit transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36m (1.5ms)[0m  [1mCREATE TABLE "mentions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "source_title" varchar(255), "author" varchar(255), "published_at" varchar(255), "paradigm_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (0.9ms)[0m  CREATE INDEX "index_mentions_on_paradigm_id" ON "mentions" ("paradigm_id")
+  [1m[36m (1.2ms)[0m  [1mCREATE TABLE "paradigms" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "pattern" varchar(255), "exemplar_id" integer, "archetype" varchar(255), "prototype" varchar(255), "example" varchar(255), "common" boolean, "discovered_at" datetime, "quantity" integer, "nullified_at" datetime, "era_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (0.9ms)[0m  CREATE INDEX "index_paradigms_on_era_id" ON "paradigms" ("era_id")
+  [1m[36m (0.7ms)[0m  [1mCREATE INDEX "index_paradigms_on_exemplar_id" ON "paradigms" ("exemplar_id")[0m
+  [1m[35m (0.8ms)[0m  CREATE TABLE "paradigms_philosophers" ("paradigm_id" integer, "philosopher_id" integer) 
+  [1m[36m (0.7ms)[0m  [1mCREATE INDEX "index_paradigms_philosophers_on_paradigm_id" ON "paradigms_philosophers" ("paradigm_id")[0m
+  [1m[35m (1.2ms)[0m  CREATE INDEX "index_paradigms_philosophers_on_philosopher_id" ON "paradigms_philosophers" ("philosopher_id")
+  [1m[36m (1.1ms)[0m  [1mCREATE TABLE "philosophers" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "first_name" varchar(255), "last_name" varchar(255), "born_on" datetime, "country" varchar(255), "field_of_study" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (0.8ms)[0m  CREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) 
+  [1m[36m (0.8ms)[0m  [1mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [1m[35m (0.1ms)[0m  SELECT version FROM "schema_migrations"
+  [1m[36m (2.7ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140815201415')[0m
+  [1m[35m (1.2ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140815200357')
+  [1m[36m (0.7ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140815200815')[0m
+  [1m[35m (1.1ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140815201027')
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to ChangeJoinTableName (20140815205035)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.4ms)[0m  [1mALTER TABLE "paradigms_philosophers" RENAME TO "philosophers_paradigms"[0m
+  [1m[35m (0.7ms)[0m  DROP INDEX "index_paradigms_philosophers_on_philosopher_id"
+  [1m[36m (0.1ms)[0m  [1mCREATE INDEX "index_philosophers_paradigms_on_philosopher_id" ON "philosophers_paradigms" ("philosopher_id")[0m
+  [1m[35m (0.1ms)[0m  DROP INDEX "index_paradigms_philosophers_on_paradigm_id"
+  [1m[36m (0.1ms)[0m  [1mCREATE INDEX "index_philosophers_paradigms_on_paradigm_id" ON "philosophers_paradigms" ("paradigm_id")[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20140815205035"]]
+  [1m[36m (1.2ms)[0m  [1mcommit transaction[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.1ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.1ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+Migrating to ChangeJoinTableName (20140815205035)
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  ALTER TABLE "philosophers_paradigms" RENAME TO "paradigms_philosophers"
+  [1m[36m (0.7ms)[0m  [1mDROP INDEX "index_philosophers_paradigms_on_paradigm_id"[0m
+  [1m[35m (0.1ms)[0m  CREATE INDEX "index_paradigms_philosophers_on_paradigm_id" ON "paradigms_philosophers" ("paradigm_id")
+  [1m[36m (0.1ms)[0m  [1mDROP INDEX "index_philosophers_paradigms_on_philosopher_id"[0m
+  [1m[35m (0.1ms)[0m  CREATE INDEX "index_paradigms_philosophers_on_philosopher_id" ON "paradigms_philosophers" ("philosopher_id")
+  [1m[36mSQL (0.1ms)[0m  [1mDELETE FROM "schema_migrations" WHERE "schema_migrations"."version" = '20140815205035'[0m
+  [1m[35m (1.3ms)[0m  commit transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
