@@ -18,7 +18,7 @@ module Scheeema
     end
 
     def associations
-      model.reflect_on_all_associations.map { |ar_association| Association.new(ar_association) }
+      model.reflect_on_all_associations.map { |ar_association| Association.new(ar_association, self) }
     end
   end
 
@@ -33,8 +33,9 @@ module Scheeema
   end
 
   class Association
-    def initialize(ar_association)
+    def initialize(ar_association, table)
       @ar_association = ar_association
+      @table = table
     end
 
     delegate :name, :foreign_key, to: :ar_association
@@ -43,9 +44,10 @@ module Scheeema
       ar_association.macro
     end
 
-    def foreign_table
-      # if there's a table that /looks/ like a join table (has the right name) ActiveRecord will return it here,
-      # regardless of whether that association uses it. Only do this where we know we need to.
+    def remote_table
+      # if there's a table called firsttable_secondtable, rails will return that table here,
+      # regardless of whether it is used for this association. Only has_and_belongs_to_many assocations
+      # have join tables, so just forcing it here.
       if type == :has_and_belongs_to_many
         ar_association.join_table
       else
@@ -53,11 +55,27 @@ module Scheeema
       end
     end
 
-    def primary_key
-      ar_association.active_record_primary_key
+    def remote_key
+      ar_association.belongs_to? ? primary_key : foreign_key
+    end
+
+    def local_table
+      table
+    end
+
+    def local_key
+      ar_association.belongs_to? ? foreign_key : primary_key
     end
 
     private
+
+    def foreign_key
+      ar_association.foreign_key
+    end
+
+    def primary_key
+      ar_association.active_record_primary_key
+    end
 
     attr_reader :ar_association
   end

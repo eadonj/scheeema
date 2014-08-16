@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe Scheeema::Table do
   let(:philosophers_table) { Scheeema::Table.all.detect { |table| table.name == 'philosophers' } }
+  let(:paradigms_table) { Scheeema::Table.all.detect { |table| table.name == 'paradigms' } }
 
   describe '.all' do
     it 'returns an array' do
@@ -49,58 +50,50 @@ describe Scheeema::Table do
     end
 
     context 'has_and_belongs_to_many' do
-      let(:paradigms_association) { philosophers_table.associations.detect { |assoc| assoc.name == :paradigms } }
+      let(:association) { philosophers_table.associations.detect { |assoc| assoc.name == :paradigms } }
 
-      it 'includes the paradigms association' do
-        expect(paradigms_association).to be_present
+      it 'includes the remote table' do
+        expect(association.remote_table).to eq('paradigms_philosophers')
       end
 
-      it 'includes the association type' do
-        expect(paradigms_association.type).to eq(:has_and_belongs_to_many)
+      it 'includes the remote_key' do
+        expect(association.remote_key).to eq('philosopher_id')
       end
 
-      it 'includes the name' do
-        expect(paradigms_association.name).to eq(:paradigms)
-      end
-
-      it 'includes the foreign table' do
-        expect(paradigms_association.foreign_table).to eq('paradigms_philosophers')
-      end
-
-      it 'includes the foreign_key' do
-        expect(paradigms_association.foreign_key).to eq('philosopher_id')
-      end
-
-      it 'includes the primary_key' do
-        expect(paradigms_association.primary_key).to eq('id')
+      it 'includes the local_key' do
+        expect(association.local_key).to eq('id')
       end
     end
 
     context 'has_many' do
-      let(:exemplar_association) { philosophers_table.associations.detect { |assoc| assoc.name == :exemplar_paradigms } }
+      let(:association) { philosophers_table.associations.detect { |assoc| assoc.name == :exemplar_paradigms } }
 
-      it 'includes the paradigms association' do
-        expect(exemplar_association).to be_present
+      it 'includes the remote table' do
+        expect(association.remote_table).to eq('paradigms')
       end
 
-      it 'includes the association type' do
-        expect(exemplar_association.type).to eq(:has_many)
+      it 'includes the remote_key' do
+        expect(association.remote_key).to eq('exemplar_id')
       end
 
-      it 'includes the name' do
-        expect(exemplar_association.name).to eq(:exemplar_paradigms)
+      it 'includes the local_key' do
+        expect(association.local_key).to eq('id')
+      end
+    end
+
+    context 'belongs_to' do
+      let(:association) { paradigms_table.associations.detect { |assoc| assoc.name == :exemplar } }
+
+      it 'includes the remote table' do
+        expect(association.remote_table).to eq('philosophers')
       end
 
-      it 'includes the foreign table' do
-        expect(exemplar_association.foreign_table).to eq('paradigms')
+      it 'includes the remote_key' do
+        expect(association.remote_key).to eq('id')
       end
 
-      it 'includes the foreign_key' do
-        expect(exemplar_association.foreign_key).to eq('exemplar_id')
-      end
-
-      it 'includes the primary_key' do
-        expect(exemplar_association.primary_key).to eq('id')
+      it 'includes the local_key' do
+        expect(association.local_key).to eq('exemplar_id')
       end
     end
   end
