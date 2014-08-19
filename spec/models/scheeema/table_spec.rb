@@ -96,5 +96,45 @@ describe Scheeema::Table do
         expect(association.local_key).to eq('exemplar_id')
       end
     end
+
+    context 'has_one' do
+      let(:association) { philosophers_table.associations.detect { |assoc| assoc.name == :student } }
+
+      it 'includes the remote table' do
+        expect(association.remote_table).to eq('philosophers')
+      end
+
+      it 'includes the remote_key' do
+        expect(association.remote_key).to eq('mentor_id')
+      end
+
+      it 'includes the local_key' do
+        expect(association.local_key).to eq('id')
+      end
+
+      it 'includes the association type' do
+        expect(association.type).to eq(:has_one)
+      end
+    end
+
+    context 'has_one through:' do
+      let(:association) { philosophers_table.associations.detect { |assoc| assoc.name == :feathered_quill } }
+
+      it 'includes the remote table' do
+        expect(association.remote_table).to eq('esoteric_tool_sets')
+      end
+
+      it 'includes the remote_key' do
+        expect(association.remote_key).to eq('feathered_quill_id')
+      end
+
+      it 'includes the local_key' do
+        expect(association.local_key).to eq('id')
+      end
+
+      it 'includes the association type' do
+        expect(association.type).to eq(:has_one_through)
+      end
+    end
   end
 end

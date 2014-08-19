@@ -11,7 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140815201415) do
+ActiveRecord::Schema.define(version: 20140819050509) do
+
+  create_table "esoteric_tool_sets", force: true do |t|
+    t.integer  "feathered_quill_id"
+    t.integer  "philosopher_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "feathered_quills", force: true do |t|
+    t.string   "feature_type"
+    t.integer  "age"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "mentions", force: true do |t|
     t.string   "source_title"
@@ -58,6 +72,9 @@ ActiveRecord::Schema.define(version: 20140815201415) do
     t.string   "field_of_study"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "mentor_id"
   end
+
+  add_index "philosophers", ["mentor_id"], name: "index_philosophers_on_mentor_id"
 
 end

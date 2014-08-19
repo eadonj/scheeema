@@ -41,7 +41,11 @@ module Scheeema
     delegate :name, :foreign_key, to: :ar_association
 
     def type
-      ar_association.macro
+      if through_table
+        "#{ar_association.macro}_through".to_sym
+      else
+        ar_association.macro
+      end
     end
 
     def remote_table
@@ -50,6 +54,8 @@ module Scheeema
       # have join tables, so just forcing it here.
       if type == :has_and_belongs_to_many
         ar_association.join_table
+      elsif through_table
+        through_table
       else
         ar_association.table_name
       end
@@ -61,6 +67,10 @@ module Scheeema
 
     def local_table
       table
+    end
+
+    def through_table
+      ar_association.options[:through].to_s.pluralize if ar_association.options[:through]
     end
 
     def local_key
