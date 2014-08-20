@@ -18,7 +18,8 @@ module Scheeema
     end
 
     def associations
-      model.reflect_on_all_associations.map { |ar_association| Association.new(ar_association, self) }
+      associations = model.reflect_on_all_associations.map { |ar_association| Association.new(ar_association, self) }
+      associations.reject { |assoc| assoc.has_through_table? }
     end
   end
 
@@ -41,15 +42,11 @@ module Scheeema
     delegate :name, :foreign_key, to: :ar_association
 
     def type
-      if through_table
-        "#{ar_association.macro}_through".to_sym
-      else
-        ar_association.macro
-      end
+      ar_association.macro
     end
 
     def remote_table
-      join_table || through_table || ar_association.table_name
+      join_table || ar_association.table_name
     end
 
     def remote_key
@@ -62,6 +59,10 @@ module Scheeema
 
     def local_key
       ar_association.belongs_to? ? foreign_key : primary_key
+    end
+
+    def has_through_table?
+      ar_association.options.has_key? :through
     end
 
     private
@@ -81,10 +82,6 @@ module Scheeema
       if type == :has_and_belongs_to_many
         ar_association.join_table
       end
-    end
-
-    def through_table
-      ar_association.through_reflection.try(:plural_name)
     end
 
     attr_reader :ar_association

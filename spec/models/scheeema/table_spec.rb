@@ -97,15 +97,31 @@ describe Scheeema::Table do
       end
     end
 
+    context 'has_many through' do
+      let(:association) { philosophers_table.associations.detect { |assoc| assoc.name == :students } }
+
+      it "does not return through associations" do
+        expect(association).to be_nil
+      end
+    end
+
+    context "has_one through" do
+      let(:association) { philosophers_table.associations.detect { |assoc| assoc.name == :feathered_quill } }
+
+      it "does not return through association" do
+        expect(association).to be_nil
+      end
+    end
+
     context 'has_one' do
-      let(:association) { philosophers_table.associations.detect { |assoc| assoc.name == :student } }
+      let(:association) { philosophers_table.associations.detect { |assoc| assoc.name == :esoteric_tool_set } }
 
       it 'includes the remote table' do
-        expect(association.remote_table).to eq('philosophers')
+        expect(association.remote_table).to eq('esoteric_tool_sets')
       end
 
       it 'includes the remote_key' do
-        expect(association.remote_key).to eq('mentor_id')
+        expect(association.remote_key).to eq('philosopher_id')
       end
 
       it 'includes the local_key' do
@@ -114,26 +130,6 @@ describe Scheeema::Table do
 
       it 'includes the association type' do
         expect(association.type).to eq(:has_one)
-      end
-    end
-
-    context 'has_one through' do
-      let(:association) { philosophers_table.associations.detect { |assoc| assoc.name == :feathered_quill } }
-
-      it 'includes the remote table' do
-        expect(association.remote_table).to eq('esoteric_tool_sets')
-      end
-
-      it 'includes the remote_key' do
-        expect(association.remote_key).to eq('feathered_quill_id')
-      end
-
-      it 'includes the local_key' do
-        expect(association.local_key).to eq('id')
-      end
-
-      it 'includes the association type' do
-        expect(association.type).to eq(:has_one_through)
       end
     end
   end

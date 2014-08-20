@@ -86,10 +86,7 @@ ActiveRecord::Schema.define(version: 20140820221219) do
     t.string   "field_of_study"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "mentor_id"
   end
-
-  add_index "philosophers", ["mentor_id"], name: "index_philosophers_on_mentor_id"
 
   create_table "students", force: true do |t|
     t.string   "first_name"
