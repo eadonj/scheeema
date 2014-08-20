@@ -16,6 +16,11 @@ describe Scheeema::Table do
     it 'includes our example table' do
       expect(philosophers_table).to be_present
     end
+
+    it 'excludes SchemaMigration when loaded' do
+      class SchemaMigration < ActiveRecord::Base; end
+      expect(Scheeema::Table.all.map(&:name)).to_not include('schema_migrations')
+    end
   end
 
   describe '#name' do

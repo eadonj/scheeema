@@ -1,11 +1,14 @@
 module Scheeema
   class Table
+    TABLES_TO_IGNORE = ['schema_migrations']
+
     attr_reader :name, :model
     private_class_method :new
 
     def self.all
       Dir[Rails.root.join('app', 'models', '*.rb')].each { |file| require file }
-      ActiveRecord::Base.descendants.map { |model| new(model) }
+      models = ActiveRecord::Base.descendants.map { |model| new(model) }
+      models.reject { |model| model.name.in? TABLES_TO_IGNORE }
     end
 
     def initialize(model)
