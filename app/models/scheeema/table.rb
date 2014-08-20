@@ -49,16 +49,7 @@ module Scheeema
     end
 
     def remote_table
-      # if there's a table called firsttable_secondtable, rails will return that table here,
-      # regardless of whether it is used for this association. Only has_and_belongs_to_many assocations
-      # have join tables, so just forcing it here.
-      if type == :has_and_belongs_to_many
-        ar_association.join_table
-      elsif through_table
-        through_table
-      else
-        ar_association.table_name
-      end
+      join_table || through_table || ar_association.table_name
     end
 
     def remote_key
@@ -67,10 +58,6 @@ module Scheeema
 
     def local_table
       table
-    end
-
-    def through_table
-      ar_association.options[:through].to_s.pluralize if ar_association.options[:through]
     end
 
     def local_key
@@ -85,6 +72,19 @@ module Scheeema
 
     def primary_key
       ar_association.active_record_primary_key
+    end
+
+    # if there's a table called firsttable_secondtable, rails will return that table here,
+    # regardless of whether it is used for this association. Only has_and_belongs_to_many assocations
+    # have join tables, so just forcing it here.
+    def join_table
+      if type == :has_and_belongs_to_many
+        ar_association.join_table
+      end
+    end
+
+    def through_table
+      ar_association.through_reflection.try(:plural_name)
     end
 
     attr_reader :ar_association

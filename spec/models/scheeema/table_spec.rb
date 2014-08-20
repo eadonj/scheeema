@@ -117,7 +117,7 @@ describe Scheeema::Table do
       end
     end
 
-    context 'has_one through:' do
+    context 'has_one through' do
       let(:association) { philosophers_table.associations.detect { |assoc| assoc.name == :feathered_quill } }
 
       it 'includes the remote table' do

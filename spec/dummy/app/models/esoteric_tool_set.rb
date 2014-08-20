@@ -1,4 +1,4 @@
 class EsotericToolSet < ActiveRecord::Base
   belongs_to :feathered_quill
-  belongs_to :philospher
+  belongs_to :philosopher
 end

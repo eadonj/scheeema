@@ -11,7 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140819050509) do
+ActiveRecord::Schema.define(version: 20140820221219) do
+
+  create_table "apprenticeships", force: true do |t|
+    t.integer  "student_id"
+    t.string   "philosopher_id"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "apprenticeships", ["philosopher_id"], name: "index_apprenticeships_on_philosopher_id"
+  add_index "apprenticeships", ["student_id"], name: "index_apprenticeships_on_student_id"
 
   create_table "esoteric_tool_sets", force: true do |t|
     t.integer  "feathered_quill_id"
@@ -20,8 +31,11 @@ ActiveRecord::Schema.define(version: 20140819050509) do
     t.datetime "updated_at"
   end
 
+  add_index "esoteric_tool_sets", ["feathered_quill_id"], name: "index_esoteric_tool_sets_on_feathered_quill_id"
+  add_index "esoteric_tool_sets", ["philosopher_id"], name: "index_esoteric_tool_sets_on_philosopher_id"
+
   create_table "feathered_quills", force: true do |t|
-    t.string   "feature_type"
+    t.string   "feather_type"
     t.integer  "age"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -76,5 +90,13 @@ ActiveRecord::Schema.define(version: 20140819050509) do
   end
 
   add_index "philosophers", ["mentor_id"], name: "index_philosophers_on_mentor_id"
+
+  create_table "students", force: true do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.integer  "age"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end
