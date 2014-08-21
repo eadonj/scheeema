@@ -1,7 +1,1 @@
-- @tables.each do |table|
-  %table.table
-    %th.header{colspan: 2}= table.name
-    - table.columns.each do |column|
-      %tr
-        %td= column.name
-        %td= column.type
+#tables{data: {tables: @tables }}

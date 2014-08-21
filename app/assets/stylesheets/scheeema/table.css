@@ -1,26 +1,16 @@
-.table {
-  float: left;
-  margin: 50px;
+.link {
+  fill: none;
+  stroke: #666;
+  stroke-width: 1.5px;
 }
 
-.table th,
-.table td {
-  padding: 8px;
-  line-height: 20px;
-  text-align: left;
-  vertical-align: top;
-  border-top: 1px solid #dddddd;
-  font-size: 14px;
+.node circle {
+  fill: #ccc;
+  stroke: #fff;
+  stroke-width: 1.5px;
 }
 
-.table th {
-  font-weight: bold;
-}
-
-.table thead th {
-  vertical-align: bottom;
-}
-
-.table tbody + tbody {
-  border-top: 2px solid #dddddd;
+text {
+  font: 10px sans-serif;
+  pointer-events: none;
 }
