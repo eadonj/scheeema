@@ -1,18 +1,13 @@
 $(document).ready(function() {
 
-  var tables = JSON.parse(tables.dataset.tables)
-  var links = [
-    
-    {source: "Microsoft", target: "Amazon", type: "licensing"},
-    {source: "Microsoft", target: "HTC", type: "licensing"},
-    {source: "Samsung", target: "Apple", type: "suit"},
-    {source: "Motorola", target: "Apple", type: "suit"},
-    {source: "Nokia", target: "Apple", type: "resolved"},
-    {source: "HTC", target: "Apple", type: "suit"},
-    {source: "Kodak", target: "Apple", type: "suit"},
-    {source: "Microsoft", target: "Barnes & Noble", type: "suit"},
-    {source: "Microsoft", target: "Foxconn", type: "suit"},
-  ];
+  var links = [];
+  var tables = $('#tables').data('tables');
+  
+  tables.forEach(function(table) {
+    table.associations.forEach(function(assoc) {
+      links.push({source: table.table_name, target: assoc.remote_table, type: 'table'})
+    });
+  });
 
   var nodes = {};
 
@@ -22,15 +17,15 @@ $(document).ready(function() {
     link.target = nodes[link.target] || (nodes[link.target] = {name: link.target});
   });
 
-  var width = 960,
-      height = 500;
+  var width = 1000,
+      height = 800;
 
   var force = d3.layout.force()
       .nodes(d3.values(nodes))
       .links(links)
       .size([width, height])
-      .linkDistance(60)
-      .charge(-300)
+      .linkDistance(50)
+      .charge(-10000)
       .on("tick", tick)
       .start();
 
@@ -72,13 +67,13 @@ $(document).ready(function() {
 
   function mouseover() {
     d3.select(this).select("circle").transition()
-        .duration(750)
+        .duration(0)
         .attr("r", 16);
   }
 
   function mouseout() {
     d3.select(this).select("circle").transition()
-        .duration(750)
+        .duration(0)
         .attr("r", 8);
   }
 });

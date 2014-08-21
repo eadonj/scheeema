@@ -3,8 +3,12 @@ module Scheeema
 
     def index
       tables = Table.all
-      binding.pry
-      @tables = tables.map {|table| {name: table.name}}.to_json
+      
+      @tables = tables.map do |table| 
+        association_data = table.associations.map { |assoc| { type: assoc.type, remote_table: assoc.remote_table } }
+        { table_name: table.name, associations: association_data }
+      end.to_json
+
       render :index
     end
   end
